@@ -4,6 +4,7 @@ Naive Bayes from scratch
 
 import pandas as pd
 from collections import defaultdict
+import math
 
 vocab = defaultdict(int)
 neg_bagofwords = defaultdict(int)
@@ -11,6 +12,8 @@ pos_bagofwords = defaultdict(int)
 
 pos_cond_prob = defaultdict(int)
 neg_cond_prob = defaultdict(int)
+
+tp=tn=fp=fn=0
 
 df = pd.read_csv('data/dataset01.csv')
 
@@ -49,6 +52,9 @@ print(f'Words in vocabulary without preprocessing: {len(vocab)}')
 neg_prior = len(train_neg_rows) / (len(train_neg_rows) + len(train_pos_rows))
 pos_prior = len(train_pos_rows) / (len(train_neg_rows) + len(train_pos_rows))
 
+neg_prior = math.log(neg_prior)
+pos_prior = math.log(pos_prior)
+
 print(f'neg prior probability: {neg_prior}, pos prior probability: {pos_prior}')
 
 neg_words = ' '.join(train_neg_rows['text'].astype(str).values.flatten()).split(' ')
@@ -63,31 +69,41 @@ for w in pos_words:
     pos_bagofwords[w.lower()] += 1
 
 print(f'after normalization, pos words: {len(pos_bagofwords)}, neg words: {len(neg_bagofwords)}')
-print('-----------------')
-print('-----------------')
-
 
 for w in vocab:
     neg_cond_prob[w.lower()] = float((neg_bagofwords[w.lower()] + 1) / (len(vocab) + len(neg_bagofwords)))
     pos_cond_prob[w.lower()] = float((pos_bagofwords[w.lower()] + 1) / (len(vocab) + len(pos_bagofwords)))
 
-#for i in neg_cond_prob:
-
+"""
+Testing
+"""
 
 for row in test_neg_rows['text']:
     words = row.split(' ')
-    prob_neg = 1.0
-    prob_pos = 1.0
+    prob_neg = neg_prior
+    prob_pos = pos_prior
     for word in words:
         if word.lower() in neg_cond_prob:
-            prob_neg *= neg_cond_prob[word.lower()]
+            prob_neg += math.log(neg_cond_prob[word.lower()])
         if word.lower() in pos_cond_prob:
-            prob_pos *= pos_cond_prob[word.lower()]
-        print(prob_neg)
-    prob_neg *= neg_prior
-    prob_pos *= pos_prior
+            prob_pos += math.log(pos_cond_prob[word.lower()])
+    if prob_neg >= prob_pos:
+        tn += 1
+    else:
+        fp += 1
 
-print(neg_prior)
-print(pos_prior)
-print(f'{prob_neg:.100f}')
-print(f'{prob_pos:.100f}')
+
+for row in test_pos_rows['text']:
+    words = row.split(' ')
+    prob_neg = neg_prior
+    prob_pos = pos_prior
+    for word in words:
+        if word.lower() in neg_cond_prob:
+            prob_neg += math.log(neg_cond_prob[word.lower()])
+        if word.lower() in pos_cond_prob:
+            prob_pos += math.log(pos_cond_prob[word.lower()])
+    if prob_pos >= prob_neg:
+        tp += 1
+    else:
+        fn += 1
+
