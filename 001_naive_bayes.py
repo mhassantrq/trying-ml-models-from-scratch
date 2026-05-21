@@ -107,3 +107,12 @@ for row in test_pos_rows['text']:
     else:
         fn += 1
 
+print(f'TP: {tp}, TN: {tn}, FP: {fp}, FN: {fn}')
+
+acc = (tp+tn)/(tp+tn+fp+fn)
+precision = tp/(tp+fp)
+recall = tp/(tp+fn)
+
+print(f'Accruacy: {acc:.2f}')
+print(f'Precision: {precision:.2f}')
+print(f'Recall: {recall:.2f}')
