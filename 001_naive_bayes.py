@@ -1,5 +1,6 @@
 """
-Naive Bayes from scratch
+Naive Bayes from scratch.
+Without using sklearn, numpy etc.
 """
 
 import pandas as pd
@@ -112,7 +113,9 @@ print(f'TP: {tp}, TN: {tn}, FP: {fp}, FN: {fn}')
 acc = (tp+tn)/(tp+tn+fp+fn)
 precision = tp/(tp+fp)
 recall = tp/(tp+fn)
+f1_score = 2 * ((precision*recall)/(precision+recall))
 
 print(f'Accruacy: {acc:.2f}')
 print(f'Precision: {precision:.2f}')
 print(f'Recall: {recall:.2f}')
+print(f'F1 Score: {f1_score:.2f}')
