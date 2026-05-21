@@ -63,7 +63,31 @@ for w in pos_words:
     pos_bagofwords[w.lower()] += 1
 
 print(f'after normalization, pos words: {len(pos_bagofwords)}, neg words: {len(neg_bagofwords)}')
+print('-----------------')
+print('-----------------')
+
 
 for w in vocab:
-    neg_cond_prob[w] = float((neg_bagofwords[w] + 1) / (len(vocab) + len(neg_bagofwords)))
-    pos_cond_prob[w] = float((pos_bagofwords[w] + 1) / (len(vocab) + len(pos_bagofwords)))
+    neg_cond_prob[w.lower()] = float((neg_bagofwords[w.lower()] + 1) / (len(vocab) + len(neg_bagofwords)))
+    pos_cond_prob[w.lower()] = float((pos_bagofwords[w.lower()] + 1) / (len(vocab) + len(pos_bagofwords)))
+
+#for i in neg_cond_prob:
+
+
+for row in test_neg_rows['text']:
+    words = row.split(' ')
+    prob_neg = 1.0
+    prob_pos = 1.0
+    for word in words:
+        if word.lower() in neg_cond_prob:
+            prob_neg *= neg_cond_prob[word.lower()]
+        if word.lower() in pos_cond_prob:
+            prob_pos *= pos_cond_prob[word.lower()]
+        print(prob_neg)
+    prob_neg *= neg_prior
+    prob_pos *= pos_prior
+
+print(neg_prior)
+print(pos_prior)
+print(f'{prob_neg:.100f}')
+print(f'{prob_pos:.100f}')
