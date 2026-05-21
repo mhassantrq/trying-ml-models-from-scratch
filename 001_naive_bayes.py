@@ -119,3 +119,13 @@ print(f'Accruacy: {acc:.2f}')
 print(f'Precision: {precision:.2f}')
 print(f'Recall: {recall:.2f}')
 print(f'F1 Score: {f1_score:.2f}')
+
+
+"""
+preprocessing pending.
+top_words_vocab = sorted(vocab.items(), key=lambda word: word[1], reverse=True)[:10]
+print(top_words_vocab)
+
+as can be seen that many words with most counts are stop words, stemming is required and much more. will come back to this algorithm soon.
+"""
+
