@@ -5,12 +5,12 @@ This code is still pending changes, unless this comment line is removed.
 """
 
 import random
+import numpy as np
 
-def single_neuron():
+def single_neuron_manual():
 
-    x = [random.random() for _ in range(3)]
-    w = [random.random() for _ in range(3)]
-
+    x = [0.2,2,3]
+    w = [-0.35,0.5,0.9]
     b = -0.23
     res = 0
 
@@ -22,5 +22,16 @@ def single_neuron():
 
     print(res)
 
+def single_neuron_numpy():
 
-single_neuron()
+    x = [0.2,2,3]
+    w = [-0.35,0.5,0.9]
+    b = -0.23
+    res = np.dot(w,x)
+    res += b
+    res = 1 / (1 + 2.718 ** -res)
+
+    print(res)
+
+single_neuron_manual()
+single_neuron_numpy()
