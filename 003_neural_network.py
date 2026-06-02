@@ -45,6 +45,16 @@ class Neuron:
         outputs = np.dot(w, X) + b
         print(outputs)
 
+    def single_layer_multiple_samples(self):
+        X = [[0.35, -0.6, 1.2],
+             [0.39, 0.5, 0.9],
+             [-1.2, -1.3, 0.66]]
+        w = [[0.2, 1.1, 0.7],
+             [1.9, 0.65, -0.53]]
+        b = [0.9, 0.85]
+        outputs = np.dot(X, np.array(w).T) + b
+        print(outputs)
+
 
 n = Neuron()
-n.single_layer()
+n.single_layer_multiple_samples()
