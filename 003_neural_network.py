@@ -7,31 +7,44 @@ This code is still pending changes, unless this comment line is removed.
 import random
 import numpy as np
 
-def single_neuron_manual():
+class NeuralNetwork:
+    pass
 
-    x = [0.2,2,3]
-    w = [-0.35,0.5,0.9]
-    b = -0.23
-    res = 0
+class Neuron:
+    def single_neuron_manual(self):
 
-    for i in range(3):
-        res += x[i]*w[i]
+        x = [0.2,2,3]
+        w = [-0.35,0.5,0.9]
+        b = -0.23
+        res = 0
 
-    res += b
-    res = 1 / (1 + 2.718 ** -res)
+        for i in range(3):
+            res += x[i]*w[i]
 
-    print(res)
+        res += b
+        res = 1 / (1 + 2.718 ** -res)
 
-def single_neuron_numpy():
+        print(res)
 
-    x = [0.2,2,3]
-    w = [-0.35,0.5,0.9]
-    b = -0.23
-    res = np.dot(w,x)
-    res += b
-    res = 1 / (1 + 2.718 ** -res)
+    def single_neuron_numpy(self):
 
-    print(res)
+        x = [0.2,2,3]
+        w = [-0.35,0.5,0.9]
+        b = -0.23
+        res = np.dot(w,x)
+        res += b
+        res = 1 / (1 + 2.718 ** -res)
 
-single_neuron_manual()
-single_neuron_numpy()
+        print(res)
+
+    def single_layer(self):
+        X = [0.35, -0.6, 1.2]
+        w = [[0.2, 1.1, 0.7],
+             [1.9, 0.65, -0.53]]
+        b = [0.9, 0.85]
+        outputs = np.dot(w, X) + b
+        print(outputs)
+
+
+n = Neuron()
+n.single_layer()
