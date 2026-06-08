@@ -8,6 +8,10 @@ import random
 import numpy as np
 import math
 
+def calculate_sigmoid(x):
+    sigmoid = 1/(1+math.exp(-x))
+    return sigmoid
+
 class NeuralNetwork:
     def three_layer(self):
         input = [[random.random() for _ in range(3)],
@@ -49,10 +53,23 @@ class NeuralNetwork:
         self.y = np.dot(input, self.weights) + self.bias
         print(self.y)
 
-n = NeuralNetwork()
+
+
+l1 = NeuralNetwork()
+l2 = NeuralNetwork()
+l3 = NeuralNetwork()
 #n.three_layer()
-n.initialize_w_b(2, 3)
 
+l1.initialize_weights_bias(6, 8)
+l2.initialize_weights_bias(3, 6)
+l3.initialize_weights_bias(1, 3)
 
-input = [random.random() for _ in range(3)]
-n.feed_forward(input)
+input = [random.random() for _ in range(8)]
+print('--------------------')
+l1.feed_forward(input)
+print('--------------------')
+l2.feed_forward(l1.y)
+print('--------------------')
+l3.feed_forward(l2.y)
+
+print(calculate_sigmoid(l3.y[0]))
