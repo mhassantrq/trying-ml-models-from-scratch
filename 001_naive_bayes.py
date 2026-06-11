@@ -1,6 +1,15 @@
 """
 Naive Bayes from scratch.
-Without using sklearn, numpy etc.
+
+The entire logic for naive bayes has been written from scratch.
+The vectorization, calculation of bag of words, probabilitites both prior and conditional.
+Moreover, accuracy, precision, recall and f1 score have been calculated without sklearn or any other module.
+
+
+The only libraries or modules used in the code are listed below with their intended use:
+1. pandas for loading dataset
+2. defaultdict for storing data
+3. math for using math.log while multiplying probabilities
 """
 
 import pandas as pd
@@ -63,11 +72,16 @@ pos_words = ' '.join(train_pos_rows['text'].astype(str).values.flatten()).split(
 
 print(f'before preprocessing, pos words: {len(pos_words)}, neg words: {len(neg_words)}')
 
+stopword_df = pd.read_csv('data/stopwords.csv')
+stopwords = ' '.join(stopword_df['words'].astype(str).values.flatten()).split(' ')
+
 for w in neg_words:
-    neg_bagofwords[w.lower()] += 1
+    if w.lower() not in stopwords:
+        neg_bagofwords[w.lower()] += 1
 
 for w in pos_words:
-    pos_bagofwords[w.lower()] += 1
+    if w.lower() not in stopwords:
+        pos_bagofwords[w.lower()] += 1
 
 print(f'after normalization, pos words: {len(pos_bagofwords)}, neg words: {len(neg_bagofwords)}')
 
