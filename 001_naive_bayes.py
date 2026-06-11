@@ -2,7 +2,7 @@
 Naive Bayes from scratch.
 
 The entire logic for naive bayes has been written from scratch.
-The vectorization, calculation of bag of words, probabilitites both prior and conditional.
+The vectorization of features, stopword removal, calculation of bag of words, probabilitites both prior and conditional.
 Moreover, accuracy, precision, recall and f1 score have been calculated without sklearn or any other module.
 
 
@@ -51,10 +51,14 @@ print(f'pos rows train: {len(train_pos_rows)}, test: {len(test_pos_rows)}')
 for_vocab = ' '.join(train_pos_rows.astype(str).values.flatten()).split(' ')
 for_vocab = for_vocab + ' '.join(train_neg_rows.astype(str).values.flatten()).split(' ')
 
+stopword_df = pd.read_csv('data/stopwords.csv')
+stopwords = ' '.join(stopword_df['words'].astype(str).values.flatten()).split(' ')
+
 print(len(for_vocab))
 
 for word in for_vocab:
-    vocab[word.lower()] += 1
+    if word.lower() not in stopwords:
+        vocab[word.lower()] += 1
 
 print(f'Total Words at start: {len(for_vocab)}')
 print(f'Words in vocabulary without preprocessing: {len(vocab)}')
