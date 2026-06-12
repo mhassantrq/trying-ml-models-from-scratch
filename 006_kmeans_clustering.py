@@ -11,6 +11,7 @@ import pandas as pd
 from collections import Counter
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
+import numpy as np
 
 df = pd.read_csv('data/dataset01.csv')
 
@@ -43,13 +44,24 @@ for doc in neg_docs['text']:
     neg_vector.append(row)
 
 
-pos_vector = PCA(n_components=3).fit_transform(pos_vector)
-neg_vector = PCA(n_components=3).fit_transform(neg_vector)
+pos_centroid = np.array(pos_vector)
+pos_centroid = np.mean(pos_centroid, axis=0)
 
-for vect in pos_vector:
-    plt.scatter(vect[0], vect[1], color='red')
+neg_centroid = np.array(neg_vector)
+neg_centroid = np.mean(neg_centroid, axis=0)
 
-for vect in neg_vector:
-    plt.scatter(vect[0], vect[1], color='blue')
+#   testing
 
-plt.show()
+
+
+
+# pos_vector = PCA(n_components=3).fit_transform(pos_vector)
+# neg_vector = PCA(n_components=3).fit_transform(neg_vector)
+
+# for vect in pos_vector:
+#     plt.scatter(vect[0], vect[1], color='red')
+
+# for vect in neg_vector:
+#     plt.scatter(vect[0], vect[1], color='blue')
+
+# plt.show()
