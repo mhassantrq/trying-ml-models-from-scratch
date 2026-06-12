@@ -8,9 +8,14 @@ import random
 import numpy as np
 import math
 
-def calculate_sigmoid(x):
-    sigmoid = 1/(1+math.exp(-x))
-    return sigmoid
+random.seed(42)
+
+def calculate_sigmoid(x, b):
+    sig = []
+    for i in range(b):
+        sigmoid = 1/(1+math.exp(-x[i][0]))
+        sig.append(sigmoid)
+    return sig
 
 class NeuralNetwork:
     def three_layer(self):
@@ -45,31 +50,28 @@ class NeuralNetwork:
     def initialize_weights_bias(self, neurons, inputs):
         self.weights = [[random.random() for _ in range(neurons)]
                         for _ in range(inputs)]
+        #   no need for transpose of matrix for now.
         self.bias = [random.random() for _ in range(neurons)]
-        print(self.weights)
-        print(self.bias)
 
     def feed_forward(self, input):
-        self.y = np.dot(input, self.weights) + self.bias
-        print(self.y)
-
+        self.output = np.dot(input, self.weights) + self.bias
 
 
 l1 = NeuralNetwork()
 l2 = NeuralNetwork()
 l3 = NeuralNetwork()
-#n.three_layer()
 
 l1.initialize_weights_bias(6, 8)
 l2.initialize_weights_bias(3, 6)
 l3.initialize_weights_bias(1, 3)
 
-input = [random.random() for _ in range(8)]
-print('--------------------')
-l1.feed_forward(input)
-print('--------------------')
-l2.feed_forward(l1.y)
-print('--------------------')
-l3.feed_forward(l2.y)
+input = [[random.random() for _ in range(8)]
+         for _ in range(3)
+        ]
 
-print(calculate_sigmoid(l3.y[0]))
+l1.feed_forward(input)
+l2.feed_forward(l1.output)
+l3.feed_forward(l2.output)
+
+print(calculate_sigmoid(l3.output, 3))
+
