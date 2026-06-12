@@ -1,7 +1,7 @@
 """
 k means clustering from scratch
 
-without using sklearn and numpy.
+without using sklearn.
 clustering of two types of data, positive and negative sentiment.
 then measuring the accuracy of the algorithm.
 
@@ -10,9 +10,7 @@ the testing below is done on smaller dataset to avoid long processing delay.
 
 import pandas as pd
 from collections import Counter
-from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
-import numpy as np
 import math
 
 df = pd.read_csv('data/dataset01.csv')
@@ -53,11 +51,20 @@ for doc in neg_docs['text']:
     else:
         test_neg_vector.append(row)
 
-pos_centroid = np.array(pos_vector)
-pos_centroid = np.mean(pos_centroid, axis=0)
+pos_centroid = []
+neg_centroid = []
+for i in range(len(vocab)):
+    pos_temp_sum = 0
+    neg_temp_sum = 0
+    for vect in pos_vector:
+        pos_temp_sum += vect[i]
+    pos_temp_sum = pos_temp_sum/len(pos_vector)
+    pos_centroid.append(pos_temp_sum)
+    for vect in neg_vector:
+        neg_temp_sum += vect[i]
+    neg_temp_sum = neg_temp_sum/len(neg_vector)
+    neg_centroid.append(neg_temp_sum)
 
-neg_centroid = np.array(neg_vector)
-neg_centroid = np.mean(neg_centroid, axis=0)
 
 tp=fp=tn=fn=0
 
