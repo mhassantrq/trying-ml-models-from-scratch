@@ -1,4 +1,5 @@
 """
+basic variant. advanced pending...
 knn from scratch
 """
 
