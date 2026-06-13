@@ -1,6 +1,10 @@
 """
 basic variant. advanced pending...
 knn from scratch
+
+process:
+1. calculate euclidean distance for all points in the dataset.
+2. 
 """
 
 import math

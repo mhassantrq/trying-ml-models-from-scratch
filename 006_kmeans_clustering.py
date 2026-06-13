@@ -6,6 +6,13 @@ clustering of two types of data, positive and negative sentiment.
 then measuring the accuracy of the algorithm.
 
 the testing below is done on smaller dataset to avoid long processing delay.
+
+process:
+1. read files. separate files at start for testing later on.
+2. make vector with n dimensions where n is the total number of features.
+3. for this example below, we are using bag of words for each word in n.
+4. calculate centroid for each dataset...
+5. for visualization, dimensionality reducation has to be done beforehand.
 """
 
 import pandas as pd
