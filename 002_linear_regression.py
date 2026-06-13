@@ -1,6 +1,13 @@
 """
-pending...
-Linear Regression from scratch
+linear regression from scratch
+
+without using sklearn and numpy.
+only pandas used for data reading and matplotlib for visualization.
+
+
+process:
+1. initialize m and b in the equation y=mx+b with 0 at start.
+
 """
 
 import pandas as pd
