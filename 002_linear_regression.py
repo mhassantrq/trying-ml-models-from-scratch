@@ -4,6 +4,7 @@ Linear Regression from scratch
 """
 
 import pandas as pd
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('data/lin_reg_multi.csv')
 
@@ -12,7 +13,7 @@ y = df['salary']
 
 m=b=0
 
-for i in range(5):
+for i in range(1000000):
     pred = []
     err = []
     sum_err = 0
@@ -40,10 +41,18 @@ for i in range(5):
 
    # print(change_b, change_m)
 
-    lr = 0.01
+    lr = 0.0001
 
     b = b-lr*change_b
     m = m-lr*change_m
 
-    print(m, b, mse)
+    print(m, b)
 
+plt.scatter(X, y)
+
+pred = []
+for x in X:
+    pred.append(m*x+b)
+
+plt.plot(X, pred)
+plt.show()
