@@ -8,15 +8,11 @@ import random
 import numpy as np
 import math
 
-#random.seed(0)
-#np.random.seed(0)
+random.seed(0)
+np.random.seed(0)
 
-def calculate_sigmoid(x, b):
-    sig = []
-    for i in range(b):
-        sigmoid = 1/(1+math.exp(-x[i][0]))
-        sig.append(sigmoid)
-    return sig
+def calculate_sigmoid(x):
+    return 1/(1+np.exp(-x))
 
 def calculate_relu(x, b):
     relu = []
@@ -66,7 +62,9 @@ class NeuralNetworkLayer:
         self.bias = np.random.uniform(-1,1,neurons)
 
     def feed_forward(self, input):
+        self.input = input
         self.output = np.dot(input, self.weights) + self.bias
+        self.activated = calculate_sigmoid(self.output)
 
 input_layer = InputLayer()
 hidden_layer1 = NeuralNetworkLayer()
@@ -81,8 +79,8 @@ output_layer.initialize_weights_bias(3, 1)
 
 input_layer.feed_forward(X)
 hidden_layer1.feed_forward(input_layer.output)
-hidden_layer2.feed_forward(hidden_layer1.output)
-output_layer.feed_forward(hidden_layer2.output)
+hidden_layer2.feed_forward(hidden_layer1.activated)
+output_layer.feed_forward(hidden_layer2.activated)
 
-print(calculate_sigmoid(output_layer.output, 3))
+print(calculate_sigmoid(output_layer.output))
 
