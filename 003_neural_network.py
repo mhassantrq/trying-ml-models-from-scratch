@@ -8,8 +8,8 @@ import random
 import numpy as np
 import math
 
-random.seed(0)
-np.random.seed(2)
+#random.seed(0)
+#np.random.seed(0)
 
 def calculate_sigmoid(x, b):
     sig = []
@@ -56,30 +56,33 @@ class NeuralNetwork:
 
         print(f'Sigmoid: {sig1, sig2, sig3}')
 
+class InputLayer:
+    def feed_forward(self, input):
+        self.output = input
+
 class NeuralNetworkLayer:
-    def initialize_weights_bias(self, neurons, inputs):
+    def initialize_weights_bias(self, inputs, neurons):
         self.weights = np.random.uniform(-1,1,(inputs, neurons))
         self.bias = np.random.uniform(-1,1,neurons)
 
     def feed_forward(self, input):
         self.output = np.dot(input, self.weights) + self.bias
 
-input_layer = NeuralNetworkLayer()
+input_layer = InputLayer()
 hidden_layer1 = NeuralNetworkLayer()
 hidden_layer2 = NeuralNetworkLayer()
 output_layer = NeuralNetworkLayer()
 
-input_layer.initialize_weights_bias(2, 1)
-hidden_layer1.initialize_weights_bias(3, 2)
-hidden_layer2.initialize_weights_bias(3, 3)
-output_layer.initialize_weights_bias(1, 3)
+X = np.random.uniform(-1,1,(3, 3))
 
-X = np.random.random()
+hidden_layer1.initialize_weights_bias(3, 3)
+hidden_layer2.initialize_weights_bias(3, 3)
+output_layer.initialize_weights_bias(3, 1)
 
 input_layer.feed_forward(X)
 hidden_layer1.feed_forward(input_layer.output)
 hidden_layer2.feed_forward(hidden_layer1.output)
 output_layer.feed_forward(hidden_layer2.output)
 
-print(calculate_relu(output_layer.output, 1))
+print(calculate_sigmoid(output_layer.output, 3))
 
