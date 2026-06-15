@@ -14,11 +14,8 @@ np.random.seed(0)
 def calculate_sigmoid(x):
     return 1/(1+np.exp(-x))
 
-def calculate_relu(x, b):
-    relu = []
-    for i in range(b):
-        relu.append(max(0,x[i]))
-    return relu
+def calculate_relu(x):
+    return np.maximum(0,x)
 
 
 # this class is for basic explanation only.
@@ -82,5 +79,5 @@ hidden_layer1.feed_forward(input_layer.output)
 hidden_layer2.feed_forward(hidden_layer1.activated)
 output_layer.feed_forward(hidden_layer2.activated)
 
-print(calculate_sigmoid(output_layer.output))
+print(calculate_sigmoid(output_layer.activated))
 
