@@ -48,8 +48,8 @@ print(f'neg rows train: {len(train_neg_rows)}, test: {len(test_neg_rows)}')
 print(f'pos rows train: {len(train_pos_rows)}, test: {len(test_pos_rows)}')
 
 
-for_vocab = ' '.join(train_pos_rows.astype(str).values.flatten()).split(' ')
-for_vocab = for_vocab + ' '.join(train_neg_rows.astype(str).values.flatten()).split(' ')
+for_vocab = ' '.join(train_pos_rows['text'].astype(str).values.flatten()).split(' ')
+for_vocab = for_vocab + ' '.join(train_neg_rows['text'].astype(str).values.flatten()).split(' ')
 
 stopword_df = pd.read_csv('data/stopwords.csv')
 stopwords = ' '.join(stopword_df['words'].astype(str).values.flatten()).split(' ')
@@ -89,9 +89,12 @@ for w in pos_words:
 
 print(f'after normalization, pos words: {len(pos_bagofwords)}, neg words: {len(neg_bagofwords)}')
 
+total_neg_bow = sum(neg_bagofwords.values())
+total_pos_bow = sum(pos_bagofwords.values())
+
 for w in vocab:
-    neg_cond_prob[w.lower()] = float((neg_bagofwords[w.lower()] + 1) / (len(vocab) + len(neg_bagofwords)))
-    pos_cond_prob[w.lower()] = float((pos_bagofwords[w.lower()] + 1) / (len(vocab) + len(pos_bagofwords)))
+    neg_cond_prob[w.lower()] = float((neg_bagofwords[w.lower()] + 1) / (len(vocab) + total_neg_bow))
+    pos_cond_prob[w.lower()] = float((pos_bagofwords[w.lower()] + 1) / (len(vocab) + total_pos_bow))
 
 """
 Testing
